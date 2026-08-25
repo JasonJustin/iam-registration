@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Access | Registration & Login Journey</title>
+<link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+<div class="wrap">
+  <div class="badge-card">
+
+    <!-- ============ SCREEN: Registration form ============ -->
+    <section class="screen active" id="screen-register">
+      <div class="badge-header">
+        <div class="eyebrow"><span class="punch-hole"></span><span class="eyebrow-text mono">Step 1 / 4</span></div>
+        <span class="status-dot mono">● ACCESS</span>
+      </div>
+      <h1>Create your identity</h1>
+      <p class="subtitle">Register with email + phone verification and MFA.</p>
+
+      <div class="banner banner-error" id="register-error" style="display:none;"></div>
+
+      <form id="register-form" novalidate>
+        <label class="field">
+          <span class="label">Full name</span>
+          <input type="text" id="reg-name" autocomplete="name" placeholder="Aditi Sharma" />
+          <span class="field-error" id="err-reg-name"></span>
+        </label>
+        <label class="field">
+          <span class="label">Email</span>
+          <input type="email" id="reg-email" autocomplete="email" placeholder="you@example.com" />
+          <span class="field-error" id="err-reg-email"></span>
+        </label>
+        <label class="field">
+          <span class="label">Phone number</span>
+          <input type="tel" id="reg-phone" autocomplete="tel" placeholder="+919876543210" />
+          <span class="field-error" id="err-reg-phone"></span>
+        </label>
+        <label class="field">
+          <span class="label">Password</span>
+          <div class="password-row">
+            <input type="password" id="reg-password" autocomplete="new-password" placeholder="At least 8 characters" />
+            <button type="button" class="toggle-visibility" data-target="reg-password">Show</button>
+          </div>
+          <div class="strength-bars" id="reg-strength-bars">
+            <div class="strength-seg"></div><div class="strength-seg"></div><div class="strength-seg"></div><div class="strength-seg"></div><div class="strength-seg"></div>
+          </div>
+          <div class="strength-hint">Use 8+ characters with upper &amp; lower case, a number, and a symbol.</div>
+          <span class="field-error" id="err-reg-password"></span>
+        </label>
+        <label class="field">
+          <span class="label">Confirm password</span>
+          <input type="password" id="reg-confirm" autocomplete="new-password" placeholder="Re-enter your password" />
+          <span class="field-error" id="err-reg-confirm"></span>
+        </label>
+
+        <button type="submit" class="btn btn-primary" id="register-submit">Create account</button>
+      </form>
+
+      <p class="footer-line">Already have a badge? <button class="link" data-goto="screen-login">Sign in</button></p>
+    </section>
+
+    <!-- ============ SCREEN: Email OTP ============ -->
+    <section class="screen" id="screen-email-otp">
+      <div class="badge-header">
+        <div class="eyebrow"><span class="punch-hole"></span><span class="eyebrow-text mono">Step 2 / 4</span></div>
+        <span class="status-dot mono">● VERIFY EMAIL</span>
+      </div>
+      <h1>Check your email</h1>
+      <p class="subtitle">Enter the 6-digit code sent to <strong id="email-otp-dest"></strong>.</p>
+
+      <div class="dev-panel" id="email-otp-dev">
+        <span>TEST MODE — OTP: <span id="email-otp-value">------</span></span>
+        <button type="button" class="link" id="email-otp-copy">use</button>
+      </div>
+
+      <div class="banner banner-error" id="email-otp-error" style="display:none;"></div>
+
+      <form id="email-otp-form" novalidate>
+        <label class="field">
+          <span class="label">Verification code</span>
+          <input type="text" id="email-otp-input" class="otp-input" inputmode="numeric" maxlength="6" placeholder="000000" />
+        </label>
+        <p class="attempts-note" id="email-otp-attempts"></p>
+        <button type="submit" class="btn btn-primary" id="email-otp-submit">Verify email</button>
+        <button type="button" class="btn btn-secondary" id="email-otp-resend">Resend code</button>
+      </form>
+    </section>
+
+    <!-- ============ SCREEN: SMS OTP ============ -->
+    <section class="screen" id="screen-sms-otp">
+      <div class="badge-header">
+        <div class="eyebrow"><span class="punch-hole"></span><span class="eyebrow-text mono">Step 3 / 4</span></div>
+        <span class="status-dot mono">● VERIFY PHONE</span>
+      </div>
+      <h1>Check your phone</h1>
+      <p class="subtitle">Enter the 6-digit code sent to <strong id="sms-otp-dest"></strong>.</p>
+
+      <div class="dev-panel" id="sms-otp-dev">
+        <span>TEST MODE — OTP: <span id="sms-otp-value">------</span></span>
+        <button type="button" class="link" id="sms-otp-copy">use</button>
+      </div>
+
+      <div class="banner banner-error" id="sms-otp-error" style="display:none;"></div>
+
+      <form id="sms-otp-form" novalidate>
+        <label class="field">
+          <span class="label">Verification code</span>
+          <input type="text" id="sms-otp-input" class="otp-input" inputmode="numeric" maxlength="6" placeholder="000000" />
+        </label>
+        <p class="attempts-note" id="sms-otp-attempts"></p>
+        <button type="submit" class="btn btn-primary" id="sms-otp-submit">Verify phone</button>
+        <button type="button" class="btn btn-secondary" id="sms-otp-resend">Resend code</button>
+      </form>
+    </section>
+
+    <!-- ============ SCREEN: MFA enabled (transitional) ============ -->
+    <section class="screen" id="screen-mfa-enabled">
+      <div class="center-block">
+        <div class="center-icon">✓</div>
+        <h1>MFA enabled</h1>
+        <p class="subtitle">Multi-factor authentication is now active on your account.</p>
+      </div>
+    </section>
+
+    <!-- ============ SCREEN: Registration success ============ -->
+    <section class="screen" id="screen-success">
+      <div class="badge-header">
+        <div class="eyebrow"><span class="punch-hole"></span><span class="eyebrow-text mono">Step 4 / 4</span></div>
+        <span class="status-dot mono">● COMPLETE</span>
+      </div>
+      <div class="center-block">
+        <div class="center-icon">✓</div>
+        <h1>Registration complete</h1>
+        <p class="subtitle">Your identity has been created and secured.</p>
+      </div>
+      <ul class="checklist">
+        <li><span class="tick">✓</span> Email verified</li>
+        <li><span class="tick">✓</span> Phone verified</li>
+        <li><span class="tick">✓</span> MFA enabled</li>
+      </ul>
+      <button class="btn btn-primary" id="go-to-login">Continue to sign in</button>
+    </section>
+
+    <!-- ============ SCREEN: Login ============ -->
+    <section class="screen" id="screen-login">
+      <div class="badge-header">
+        <div class="eyebrow"><span class="punch-hole"></span><span class="eyebrow-text mono">Authenticate</span></div>
+        <span class="status-dot mono">● ACCESS</span>
+      </div>
+      <h1>Sign in</h1>
+      <p class="subtitle">Verify your identity to continue.</p>
+
+      <div class="banner banner-error" id="login-error" style="display:none;"></div>
+
+      <form id="login-form" novalidate>
+        <label class="field">
+          <span class="label">Email</span>
+          <input type="email" id="login-email" autocomplete="email" placeholder="you@example.com" />
+        </label>
+        <label class="field">
+          <span class="label">Password</span>
+          <div class="password-row">
+            <input type="password" id="login-password" autocomplete="current-password" placeholder="Your password" />
+            <button type="button" class="toggle-visibility" data-target="login-password">Show</button>
+          </div>
+        </label>
+        <div class="row-between">
+          <label class="checkbox-row">
+            <input type="checkbox" id="login-remember" />
+            Remember me
+          </label>
+          <button type="button" class="link" id="forgot-password">Forgot password?</button>
+        </div>
+        <button type="submit" class="btn btn-primary" id="login-submit">Sign in</button>
+      </form>
+
+      <p class="footer-line">Need a badge? <button class="link" data-goto="screen-register">Create an account</button></p>
+    </section>
+
+    <!-- ============ SCREEN: Login OTP (MFA) ============ -->
+    <section class="screen" id="screen-login-otp">
+      <div class="badge-header">
+        <div class="eyebrow"><span class="punch-hole"></span><span class="eyebrow-text mono">MFA required</span></div>
+        <span class="status-dot mono">● VERIFYING</span>
+      </div>
+      <h1>Enter your code</h1>
+      <p class="subtitle" id="login-otp-subtitle">A code was sent to your registered contact.</p>
+
+      <div class="dev-panel" id="login-otp-dev">
+        <span>TEST MODE — OTP: <span id="login-otp-value">------</span></span>
+        <button type="button" class="link" id="login-otp-copy">use</button>
+      </div>
+
+      <div class="banner banner-error" id="login-otp-error" style="display:none;"></div>
+
+      <form id="login-otp-form" novalidate>
+        <label class="field">
+          <span class="label">Verification code</span>
+          <input type="text" id="login-otp-input" class="otp-input" inputmode="numeric" maxlength="6" placeholder="000000" />
+        </label>
+        <p class="attempts-note" id="login-otp-attempts"></p>
+        <button type="submit" class="btn btn-primary" id="login-otp-submit">Verify &amp; sign in</button>
+      </form>
+    </section>
+
+  </div>
+  <p class="foot-note">IDENTITY &amp; ACCESS MANAGEMENT — SIMULATED OTP DELIVERY</p>
+</div>
+
+<script src="/js/app.js"></script>
+</body>
+</html>

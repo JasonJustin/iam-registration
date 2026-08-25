@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Dashboard | Access</title>
+<link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+<div class="wrap">
+  <div class="badge-card" id="dashboard-card" style="display:none;">
+    <div class="badge-header">
+      <div class="eyebrow"><span class="punch-hole"></span><span class="eyebrow-text mono">Session</span></div>
+      <span class="status-dot mono">● AUTHENTICATED</span>
+    </div>
+    <h1 id="welcome-name">Welcome</h1>
+    <p class="subtitle">You're signed in via a server-side session cookie.</p>
+
+    <div class="dashboard-row"><span class="k">Name</span><span class="v" id="d-name"></span></div>
+    <div class="dashboard-row"><span class="k">Email</span><span class="v" id="d-email"></span></div>
+    <div class="dashboard-row"><span class="k">Phone</span><span class="v" id="d-phone"></span></div>
+    <div class="dashboard-row"><span class="k">User ID</span><span class="v mono" id="d-id"></span></div>
+    <div class="dashboard-row"><span class="k">MFA</span><span class="v" id="d-mfa"></span></div>
+
+    <button class="btn btn-secondary" id="logout-btn" style="margin-top:20px;">Sign out</button>
+
+    <hr class="section-divider" />
+
+    <h1 style="font-size:16px;">JWT flow demo</h1>
+    <p class="subtitle" style="margin-bottom:16px;">
+      Separate from the session cookie above — re-authenticate to get a
+      short-lived bearer token, then use it to call a protected endpoint.
+    </p>
+
+    <label class="field">
+      <span class="label">Password (to issue a token)</span>
+      <div class="password-row">
+        <input type="password" id="jwt-password" placeholder="Re-enter your password" />
+        <button type="button" class="toggle-visibility" data-target="jwt-password">Show</button>
+      </div>
+    </label>
+
+    <button class="btn btn-primary" id="get-token-btn">Issue JWT</button>
+    <button class="btn btn-secondary" id="call-protected-btn" disabled>Call /api/protected</button>
+
+    <div class="jwt-output" id="jwt-output">No token issued yet.</div>
+  </div>
+</div>
+
+<script src="/js/dashboard.js"></script>
+</body>
+</html>
