@@ -28,8 +28,23 @@ Login → Credentials valid → MFA required → OTP → Session created → Das
 | GET    | /api/protected          | Requires `Authorization: Bearer <jwt>`    |
 | GET    | /api/test/get-otp/:id   | **Test-only** — returns the generated OTP for a challenge |
 
-## Security notes
+## Storage
 
+Accounts, OTP challenges, and sessions need to be shared across requests.
+Locally, this uses a simple in-memory store (fine for one Node process).
+**On Vercel, you must connect a Redis database**, since serverless functions
+don't share memory between instances — without it, OTP verification will
+intermittently fail with "not found" or "expired" errors.
+
+**To connect Redis on Vercel (one-time, ~2 minutes):**
+1. Open your project on vercel.com → **Storage** tab → **Create Database**
+2. Choose **Upstash** → **Redis** (the free tier is enough for this demo)
+3. Connect it to this project — Vercel automatically adds the required
+   environment variables and redeploys
+4. Once redeployed, visit `/api/health` on your live site — it should
+   report `"storage":"redis"` instead of `"storage":"memory"`
+
+## Security notes
 - Passwords are hashed with bcrypt before storage.
 - OTPs are generated server-side, 6-digit, hashed (salted with the
   challenge id) before storage — never returned in the normal API
